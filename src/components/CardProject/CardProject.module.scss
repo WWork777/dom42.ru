@@ -1,0 +1,334 @@
+@use "../../app/const" as *;
+
+.preview_card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  width: 100%;
+
+  .main_image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 20px;
+    transition: 0.3s ease;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  .card_info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .project_name {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 15px;
+
+      p {
+        font-size: clamp(1.375rem, 1.2885rem + 0.3846vw, 1.75rem) !important;
+        text-transform: uppercase;
+        font-weight: 400;
+        margin: 0;
+        color: black;
+      }
+
+      .link_more {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+
+        .link_text {
+          display: none; // Скрыто по умолчанию (мобилки)
+          color: $orange;
+          font-weight: 500;
+        }
+
+        .orange_arrow {
+          flex-shrink: 0;
+          background-color: $orange;
+          border-radius: 50%;
+          width: 32px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: transform 0.3s ease;
+        }
+
+        &:hover .orange_arrow {
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    .project_info {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      gap: 16px;
+
+      .project_info_card {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        font-size: clamp(1rem, 0.9423rem + 0.2564vw, 1.25rem) !important;
+        font-weight: 400;
+        color: #333;
+
+        .icon_container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 6px;
+          border-radius: 8px;
+          background-color: $gray-light;
+
+          img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            border-radius: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .project_price_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: auto;
+
+    .price_block {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project_price {
+      font-size: clamp(1.375rem, 1.2885rem + 0.3846vw, 1.75rem) !important;
+      font-weight: 400;
+      color: black;
+      white-space: nowrap;
+    }
+
+    .price_label {
+      font-size: 11px;
+      font-weight: 450;
+      color: hsla(0, 0%, 0%, 0.5);
+      line-height: 1.1;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .calc_button {
+      cursor: pointer;
+      white-space: nowrap;
+      background-color: transparent;
+      padding: 10px 20px;
+      font-weight: 500;
+      color: black;
+      border: 1px solid $orange;
+      border-radius: 12px;
+      transition: 0.3s ease;
+
+      &:hover {
+        background-color: $orange;
+        color: white;
+      }
+    }
+  }
+}
+
+/* Адаптивность */
+
+@media (max-width: 992px) {
+  .preview_card {
+    gap: 15px;
+    .main_image {
+      height: 250px;
+    }
+    .card_info .project_name p {
+      font-size: 20px !important;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .preview_card {
+    .main_image {
+      height: 200px;
+    }
+
+    .card_info .project_name .link_more .link_text {
+      display: none;
+    }
+
+    .project_price_container {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+
+      .calc_button {
+        width: 100%;
+        padding: 14px;
+      }
+    }
+
+    .card_info .project_info {
+      gap: 10px;
+      justify-content: space-between;
+    }
+  }
+}
+
+@media (min-width: 1400px) {
+  .preview_card {
+    .card_info .project_name .link_more .link_text {
+      display: inline;
+    }
+  }
+}
+/* --- Стили для модального окна --- */
+.modal_overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  padding: 15px;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal_content {
+  background: white;
+  padding: clamp(30px, 5vw, 40px);
+  border-radius: 24px;
+  max-width: 450px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+  h3 {
+    color: $orange;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 24px;
+    line-height: 1.4;
+    strong {
+      color: black;
+    }
+  }
+}
+
+.close_btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 32px;
+  cursor: pointer;
+  color: #ccc;
+  line-height: 1;
+  transition: 0.2s;
+  &:hover {
+    color: $orange;
+  }
+}
+
+.modal_form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 2px solid $gray-light;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+    color: black;
+    background-color: white;
+    &:focus {
+      border-color: $orange;
+    }
+  }
+}
+
+.submit_button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(240, 126, 0, 0.1);
+  border: 1px solid $orange;
+  border-radius: 12px;
+  padding: 6px 6px 6px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.3s;
+
+  span {
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+  }
+
+  .arrow_box_small {
+    width: 44px;
+    height: 44px;
+    background: $orange;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+  }
+
+  &:hover {
+    background: $orange;
+    span {
+      color: #fff;
+    }
+    .arrow_box_small {
+      background: #fff;
+      svg path {
+        stroke: $orange;
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

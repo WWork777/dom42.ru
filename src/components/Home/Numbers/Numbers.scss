@@ -1,0 +1,77 @@
+@use "../../../app/const" as *;
+
+.numbers-card-container {
+  display: grid;
+  // Автоматическая сетка: минимум 250px, максимум — поровну.
+  // На десктопе будет 4 в ряд, на планшете 2х2.
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px 0;
+  max-width: 1600px;
+  margin: 50px auto;
+
+  .numbers-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 30px;
+    background-color: $gray-light;
+    border-radius: 20px;
+    transition: all 0.3s ease; // Плавность для ховера
+    cursor: default;
+    border: 1px solid transparent;
+
+    .numbers-title {
+      font-size: clamp(1.5rem, 1.3269rem + 0.7692vw, 2.25rem);
+      color: $orange;
+      font-weight: 650;
+      transition: transform 0.3s ease;
+      display: inline-block;
+    }
+
+    .numbers-desc {
+      white-space: pre-line;
+      font-size: clamp(1rem, 0.9423rem + 0.2564vw, 1.25rem);
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.8);
+    }
+
+    // --- ЭФФЕКТЫ ПРИ НАВЕДЕНИИ ---
+    &:hover {
+      background-color: #fff; // Чуть высветляем фон
+      transform: translateY(-8px); // Карточка "подпрыгивает"
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08); // Мягкая тень
+      border-color: rgba($orange, 0.2);
+
+      .numbers-title {
+        transform: scale(1.05); // Заголовок слегка увеличивается
+      }
+    }
+  }
+}
+
+// Планшеты и маленькие ноутбуки
+@media (max-width: 1200px) {
+  .numbers-card-container {
+    grid-template-columns: repeat(2, 1fr); // Фиксируем 2 колонки
+    gap: 15px;
+  }
+}
+
+// Мобильные устройства
+@media (max-width: 600px) {
+  .numbers-card-container {
+    grid-template-columns: 1fr; // В одну колонку
+    width: 90%;
+    margin-bottom: 0;
+
+    .numbers-card {
+      padding: 24px;
+
+      // На мобилках ховер не всегда уместен, можно чуть упростить
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+  }
+}

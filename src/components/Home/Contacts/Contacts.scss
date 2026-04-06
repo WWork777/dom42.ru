@@ -1,0 +1,264 @@
+@use "../../../app/const" as *;
+
+.contacts {
+  &__wrapper {
+    display: flex;
+    gap: 30px;
+    align-items: stretch;
+  }
+
+  &__card {
+    flex: 0 0 450px;
+    border: 1px solid $orange;
+    border-radius: 20px;
+    padding: 25px;
+  }
+
+  &__title {
+    margin-bottom: 25px;
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__item {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+
+  &__icon {
+    width: 50px;
+    min-width: 50px;
+    height: 50px;
+    border: 1px solid $orange;
+    background-color: hsla(32, 100%, 47%, 0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 60%;
+      height: auto;
+    }
+  }
+
+  &__label {
+    font-size: 18px;
+    color: #777;
+    margin-bottom: 0px;
+  }
+
+  &__text {
+    color: black;
+    font-size: 20px;
+  }
+
+  &__link {
+    color: $orange;
+    text-decoration: none;
+    font-size: 20px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  button {
+    margin-top: 30px;
+    /* Убираем жесткие отступы, которые ломают верстку */
+    padding: 8px 8px 8px 24px;
+    gap: 20px;
+    width: 100%; // На десктопе кнопка по контенту
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @media (max-width: 450px) {
+      width: 100%; // На маленьких телефонах на всю ширину
+      padding-left: 20px; // Умеренный отступ для текста
+      gap: 10px; // Уменьшаем зазор между текстом и стрелкой
+
+      label {
+        font-size: 16px; // Чуть уменьшим шрифт текста, чтобы влезло
+        white-space: nowrap;
+      }
+    }
+  }
+
+  &__map {
+    flex: 1;
+    border-radius: 20px;
+    overflow: hidden;
+    min-height: 350px;
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .contacts {
+    &__wrapper {
+      flex-direction: column;
+    }
+
+    &__card {
+      padding: 20px;
+      flex: 0;
+    }
+
+    &__title {
+      margin-bottom: 20px;
+    }
+
+    &__items {
+      gap: 10px;
+    }
+    &__icon {
+      width: 40px;
+      min-width: 40px;
+      height: 40px;
+    }
+    &__label {
+      font-size: 16px;
+    }
+    &__link {
+      font-size: 14px;
+    }
+    &__text {
+      font-size: 14px;
+    }
+    &__map {
+      min-height: 0;
+      height: 50vh;
+      max-height: 50vh;
+      iframe {
+        height: 50vh;
+      }
+    }
+  }
+}
+/* --- Модальное окно --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000; // Поверх карты и хедера
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: white;
+  padding: 40px;
+  border-radius: 30px;
+  max-width: 500px;
+  width: 100%;
+  position: relative; // ОБЯЗАТЕЛЬНО: чтобы close-btn считал координаты отсюда
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 480px) {
+    padding: 30px 20px;
+  }
+
+  h3 {
+    color: $orange;
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 16px;
+  }
+}
+
+.close-btn {
+  position: absolute; // Привязывается к первому родителю с position: relative
+  top: 15px; // Отступ сверху
+  right: 15px; // Отступ справа
+  width: 30px; // Ограничим ширину области
+  height: 30px; // Ограничим высоту области
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  font-size: 32px; // Размер крестика
+  cursor: pointer;
+  color: #ccc;
+  line-height: 1;
+  padding: 0; // Убираем дефолтные паддинги кнопки
+  z-index: 10; // Чтобы быть точно над текстом
+  transition: color 0.2s ease;
+  &:hover {
+    color: $orange;
+  }
+
+  @media (max-width: 480px) {
+    top: 10px;
+    right: 10px;
+  }
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  input {
+    width: 100%;
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    outline: none;
+    background-color: white;
+    color: black;
+    &:focus {
+      border-color: $orange;
+    }
+  }
+
+  .cta-form {
+    width: 100%;
+    margin-top: 10px;
+    justify-content: space-between;
+    padding-left: 24px; // Сбрасываем твой паддинг 80px для формы
+    gap: 10px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 30px 20px;
+    h3 {
+      font-size: 22px;
+    }
+  }
+}

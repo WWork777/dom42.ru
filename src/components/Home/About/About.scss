@@ -1,0 +1,118 @@
+@use '../../../app/const' as *;
+
+
+.about {
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+    .video-container{
+        display: flex;
+        min-width: fit-content;
+        //border: 2px solid #6d6f70;
+        overflow: hidden;
+        border-radius: 32px;
+        -webkit-border-radius: 32px;
+        -moz-border-radius: 32px;
+        -ms-border-radius: 32px;
+        -o-border-radius: 32px;
+}
+
+    .about-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 24px;
+        .about-text-title{
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        p{
+            font-size: clamp(1.125rem, 1.0385rem + 0.3846vw, 1.5rem) !important;
+            color: rgba(0, 0, 0, 0.8);
+        }
+    }
+
+    .advantage-block {
+        display: flex;
+        flex-direction: row;
+        //justify-content: space-between;
+        gap: 20px;
+
+        .link-advantage {
+            background-color: $gray-light;
+            padding: 16px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 500;
+            border-radius: 20px;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            -ms-border-radius: 20px;
+            -o-border-radius: 20px;
+            transition: .3s ease;
+            -webkit-transition: .3s ease;
+            -moz-transition: .3s ease;
+            -ms-transition: .3s ease;
+            -o-transition: .3s ease;
+
+            img {
+                object-fit: contain;
+                width: 36px;
+                height: auto;
+            }
+
+            &.more-videos {
+                padding: 16px 40px;
+            }
+            &:hover{
+                background-color: $gray-light-hover;
+            }
+        }
+    }
+}
+
+
+@media(max-width:992px) {
+    .about {
+        flex-direction: column;
+        gap: 3vw;
+        
+    .video-container{
+        max-width: 100%;
+        min-width: 0;
+        height: auto;
+        iframe{
+            width: 100%;
+            height: 200px;
+        }
+    }
+
+
+        .about-text {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            .about-text-title{
+                gap: 10px;
+            }
+            p{
+                font-size: 18px;
+            }
+        }
+        .advantage-block{
+            gap: 3vw;
+            .link-advantage{
+                font-size: 18px;
+                height: auto;
+                &.more-videos{
+                    padding: 16px 20px;
+                }
+            }
+        }
+
+    }
+}

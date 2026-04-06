@@ -1,0 +1,295 @@
+@use "../../../app/const" as *;
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fon {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes slogan1 {
+  0% {
+    opacity: 0;
+    transform: translateX(-10%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes podslogan1 {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%);
+  }
+
+  30% {
+    opacity: 0;
+    transform: translateX(-25%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slogan2 {
+  0% {
+    opacity: 0;
+    transform: translateX(10%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes podslogan2 {
+  0% {
+    opacity: 0;
+    transform: translateX(50%);
+  }
+
+  30% {
+    opacity: 0;
+    transform: translateX(25%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes ugol1 {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes ugol2 {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes button {
+  0% {
+    opacity: 0;
+    transform: translateX(50%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes backgroundMove {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.hero-img {
+  position: absolute;
+
+  width: 100%;
+
+  height: 100vh;
+
+  object-fit: cover;
+
+  object-position: center bottom;
+
+  bottom: 0;
+
+  z-index: -10;
+
+  animation: backgroundMove 0.5s ease;
+
+  -webkit-animation: backgroundMove 0.5s ease;
+}
+
+.hero {
+  display: flex;
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+
+  //animation: fon 0.45s ease;
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    gap: 20px;
+    padding: 9vh 9%;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  .slogan {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    color: white;
+    gap: 20px;
+
+    h1 {
+      font-family: grandisExtended, sans-serif;
+      font-size: clamp(2rem, 0.875rem + 5vw, 6.875rem) !important;
+      font-weight: 700;
+      margin-bottom: 0;
+      line-height: 1;
+
+      opacity: 0;
+      animation: fadeUp 0.8s ease-out 0.3s forwards;
+    }
+
+    p {
+      font-size: clamp(1.25rem, 0.9327rem + 1.4103vw, 2.625rem) !important;
+      font-weight: 400;
+      margin-bottom: 0;
+
+      opacity: 0;
+      animation: fadeUp 0.8s ease-out 0.5s forwards;
+    }
+  }
+
+  .hero-adv {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    color: white;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    padding: 20px 40px;
+    width: fit-content;
+    font-weight: 600;
+    margin-top: 20px;
+    font-size: clamp(1.25rem, 1.0192rem + 1.0256vw, 2.25rem) !important;
+    border: 1px solid $orange;
+    border-radius: 24px;
+
+    opacity: 0;
+    animation: fadeUp 0.8s ease-out 0.7s forwards;
+
+    .hero-adv-line {
+      width: 2px;
+      height: 40px;
+      background-color: white;
+    }
+  }
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #747474;
+  z-index: -11;
+  bottom: 0;
+}
+
+@media (max-width: 1600px) {
+  .hero {
+    .hero-content {
+      padding: 13vh 5%;
+      justify-content: end;
+    }
+  }
+}
+
+@media (max-width: 1175px) {
+  .hero {
+  }
+}
+
+@media (max-width: 1100px) {
+  .hero {
+  }
+}
+
+@media (max-width: 992px) {
+  .hero {
+    .hero-content {
+      padding: 100px 3%;
+      .slogan {
+        max-width: 100%;
+        margin-left: 0;
+        margin-top: 0;
+        h1 {
+          font-size: 32px;
+          text-align: center;
+        }
+        p {
+          font-size: 20px;
+          text-align: center;
+        }
+      }
+      .hero-adv {
+        gap: 10px;
+        padding: 10px 20px;
+        font-size: 20px;
+        align-self: center;
+        border-radius: 14px;
+        -webkit-border-radius: 14px;
+        -moz-border-radius: 14px;
+        -ms-border-radius: 14px;
+        -o-border-radius: 14px;
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+@use "../../app/const" as *; // Убедись, что путь верный
+
+.project-page {
+  margin: 200px auto 0; // Центрируем страницу
+  padding: 0 0px;
+  max-width: 1600px;
+
+  @media (max-width: 1200px) {
+    margin-top: 120px; // Уменьшаем отступ на планшетах
+    width: 90%;
+    padding: 0 0px; // Добавляем отступы по бокам на планшетах
+  }
+  h1 {
+    // Адаптивный шрифт для заголовка
+    font-size: clamp(24px, 5vw, 40px);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 30px; // Уменьшил на мобилках
+    text-align: center; // Центрирование лучше смотрится на телефонах
+  }
+
+  .projects-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1200px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    // Добавляем для Full HD мониторов
+    @media (min-width: 1600px) {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+  }
+}

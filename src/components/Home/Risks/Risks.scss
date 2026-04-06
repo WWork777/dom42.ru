@@ -1,0 +1,40 @@
+@use '../../../app/const' as *;
+
+.risks{
+    flex-direction: row-reverse;
+        img{
+            object-fit: cover;
+            width: 50%;
+            height: auto;
+            border-radius: 32px;
+            -webkit-border-radius: 32px;
+            -moz-border-radius: 32px;
+            -ms-border-radius: 32px;
+            -o-border-radius: 32px;
+    }
+    .about-text-title{
+        p{
+            span{
+                font-weight: 500;
+                color: $orange;
+            }
+        }
+    }
+}
+
+@media(max-width:1600px){
+    .risks{
+        img{
+            width: 80%;
+        }
+    }
+}
+
+@media(max-width:992px){
+    .risks{
+        flex-direction: column;
+        img{
+            width: 100%;
+        }
+    }
+}

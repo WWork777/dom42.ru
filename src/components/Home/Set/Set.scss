@@ -1,0 +1,34 @@
+@use '../../../app/const' as *;
+
+.set{
+    flex-direction: row-reverse;
+        img{
+            object-fit: cover;
+            min-width: 50%;
+            height: 40vh;
+            min-height: 350px;
+            border-radius: 32px;
+            -webkit-border-radius: 32px;
+            -moz-border-radius: 32px;
+            -ms-border-radius: 32px;
+            -o-border-radius: 32px;
+    }
+    .about-text-title{
+        p{
+            span{
+                font-weight: 500;
+                color: $orange;
+            }
+        }
+    }
+}
+
+@media(max-width:992px){
+    .set{
+        flex-direction: column-reverse;
+        gap: 20px;
+        img{
+            width: 100%;
+        }
+    }
+}

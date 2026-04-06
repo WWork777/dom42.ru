@@ -1,0 +1,199 @@
+.product-page {
+  display: flex;
+  gap: 32px;
+  padding: 180px 32px 32px;
+  &__left,
+  &__right {
+    width: 50%;
+  }
+}
+
+.breadcrumbs {
+  margin-bottom: 32px;
+  .breadcrumbs_container {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    a {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 24px;
+      color: #808080;
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: #333;
+      }
+    }
+  }
+}
+
+@media (max-width: 1500px){
+  .breadcrumbs .breadcrumbs_container {
+    gap: 8px;
+    a{
+      font-size: 16px;
+    }
+  }
+    .product-page__right .product-name h1 {
+      font-size: 44px;
+  }
+    .product-page__right .price-container p {
+      font-size: 44px;
+  }
+    .product-page__right .price-container .buy-container button {
+      font-size: 20px;
+      padding: 20px 32px;
+  }
+  .product-page__right .docs-container button, .product-page__right .docs-container a {
+    padding: 32px;
+    font-size: 28px;
+}
+}
+
+@media (max-width: 1350px){
+  .product-page__right .price-container .buy-container button {
+      font-size: 16px;
+      padding: 16px 26px;
+  }
+  .product-page__right .docs-container button, .product-page__right .docs-container a {
+    padding: 28px;
+    font-size: 26px;
+}
+.product-page__right .price-container p {
+      font-size: 28px !important;
+      margin-bottom: 0 !important;
+  }
+  .product-page__right .product-name h1 {
+      font-size: 40px;
+  }
+  
+  .breadcrumbs .breadcrumbs_container {
+    gap: 8px;
+    a{
+      font-size: 14px;
+      &:last-child{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+        
+    }
+  }
+  .product-page__right .product-button-container {
+    font-size: 14px;
+    gap: 24px;
+    svg{
+      height: 20px;
+      width: auto;
+    }
+    .buttons-left {
+    gap: 24px;
+}
+}
+}
+
+@media (max-width: 1270px){
+  
+.product-page{
+  padding: 134px 32px 32px;
+}
+}
+
+@media (max-width: 684px) {
+  .product-page {
+    flex-direction: column;
+    gap: 16px;
+    padding: 98px 8px 8px;
+    &__left,
+    &__right {
+      width: 100%;
+    }
+  }
+
+  .breadcrumbs {
+    margin-bottom: 20px;
+    .breadcrumbs_container {
+      gap: 8px;
+      flex-wrap: wrap;
+
+      a {
+        font-size: 14px;
+        line-height: 18px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 120px; // Ограничиваем ширину ссылок
+      }
+
+      // Стили для стрелки на мобильных
+      svg {
+        width: 12px;
+        height: 12px;
+      }
+    }
+  }
+}
+
+@media (max-width: 430px) {
+  .breadcrumbs {
+    .breadcrumbs_container {
+      a {
+        font-size: 14px;
+        max-width: 130px; // Еще меньше на самых маленьких экранах
+      }
+
+      // Скрываем некоторые элементы при необходимости
+      // Например, скрываем промежуточные уровни если их слишком много
+      // a:nth-child(n + 5):nth-child(-n + 6) {
+      //   display: none;
+      // }
+
+      // Альтернативный вариант: показываем только первую и последнюю крошку
+      &.collapsed {
+        a:not(:first-child):not(:last-child) {
+          display: none;
+        }
+
+        a:first-child::after {
+          content: "...";
+          margin: 0 4px;
+        }
+      }
+    }
+  }
+}
+
+// Опционально: можно добавить горизонтальный скролл для длинных цепочек
+@media (max-width: 400px) {
+  .breadcrumbs {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+
+    .breadcrumbs_container {
+      min-width: max-content; // Запрещаем перенос
+      padding-bottom: 4px; // Для визуального разделения скролла
+      a {
+        max-width: 100px;
+      }
+      &::-webkit-scrollbar {
+        height: 2px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 2px;
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+    }
+  }
+}

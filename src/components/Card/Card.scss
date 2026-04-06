@@ -1,0 +1,182 @@
+@use "../../app/const" as *;
+
+.preview-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  border-radius: 20px;
+  padding: 10px; // Небольшой отступ, чтобы тень не обрезалась
+  margin: -10px; // Компенсация отступа
+
+  // Контейнер для картинки, чтобы зум не выходил за края
+  .image-wrapper {
+    width: 100%;
+    height: 35vh;
+    overflow: hidden;
+    border-radius: 20px;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: transform 0.3s ease;
+
+    .project-name {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+
+      p {
+        font-size: clamp(1.375rem, 1.2885rem + 0.3846vw, 1.75rem) !important;
+        text-transform: uppercase;
+        font-weight: 400;
+        transition: color 0.3s ease;
+      }
+
+      .link-more {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        color: inherit;
+
+        span {
+          font-size: 14px;
+          opacity: 0.7;
+          transition: opacity 0.3s ease;
+        }
+
+        .orange-arrow {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: $orange;
+          border-radius: 50%;
+          width: 32px;
+          height: 32px;
+          transition: all 0.3s ease;
+
+          svg {
+            transition: transform 0.3s ease;
+          }
+        }
+      }
+    }
+
+    .project-info {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+
+      .project-info-card {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 8px;
+        font-size: clamp(1rem, 0.9423rem + 0.2564vw, 1.25rem) !important;
+        font-weight: 400;
+
+        .icon-container {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 6px;
+          border-radius: 8px;
+          background-color: $gray-light;
+          transition: background-color 0.3s ease;
+
+          img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+          }
+        }
+      }
+    }
+
+    .project-price {
+      font-size: clamp(1.375rem, 1.2885rem + 0.3846vw, 1.75rem) !important;
+      font-weight: 400;
+      color: black;
+      transition: color 0.3s ease;
+    }
+  }
+
+  // --- HOVER EFFECTS ---
+  &:hover {
+    background-color: #fff;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+
+    img {
+      transform: scale(1.08); // Увеличение фото
+    }
+
+    .project-name p {
+      color: $orange; // Заголовок подсвечивается
+    }
+
+    .project-price {
+      color: $orange; // Цена выделяется
+    }
+
+    .orange-arrow {
+      transform: scale(1.1);
+      background-color: darken($orange, 5%); // Делаем кнопку чуть насыщеннее
+
+      svg {
+        transform: translateX(3px); // Стрелка двигается вправо
+      }
+    }
+
+    .link-more span {
+      opacity: 1;
+    }
+
+    .icon-container {
+      background-color: rgba($orange, 0.1); // Иконки чуть подсвечиваются
+    }
+  }
+}
+
+// Адаптивность без изменений логики, только поправка gap
+@media (max-width: 992px) {
+  .preview-card {
+    margin: 0;
+    padding: 0;
+    gap: 10px;
+
+    &:hover {
+      box-shadow: none; // На планшетах тень может мешать сетке
+      img {
+        transform: none;
+      } // Отключаем тяжелые эффекты для производительности
+    }
+
+    .image-wrapper {
+      height: 250px;
+    }
+
+    .card-info {
+      gap: 10px;
+      .project-name p {
+        font-size: 22px;
+      }
+      .project-price {
+        font-size: 22px;
+      }
+    }
+  }
+}

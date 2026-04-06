@@ -1,0 +1,173 @@
+.feedback {
+  // Замени на путь к своему фоновому изображению
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("/VeteranPage/house_bg.avif") center/cover no-repeat;
+  padding: 100px 20px;
+  min-height: 500px;
+  height: 750px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: -100px;
+
+  @media (max-width: 768px) {
+    padding: 60px 15px;
+    background-position: 70% center; // Сдвигаем фон, чтобы люди были видны на мобилках
+  }
+}
+
+.container {
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.form_wrapper {
+  // Эффект матового стекла
+  background: #eaeaeab2;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+
+  border-radius: 30px;
+  padding: clamp(30px, 5vw, 30px);
+  width: 100%;
+  max-width: 700px; // Ширина формы как на макете
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    border-radius: 20px;
+    padding: 30px 20px;
+  }
+}
+
+.title {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 600;
+  color: #000;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  color: black;
+  border-radius: 12px;
+  padding: 18px 24px;
+  font-size: 16px;
+  outline: none;
+  transition: 0.3s;
+
+  &::placeholder {
+    color: #999;
+  }
+
+  &:focus {
+    background: #fff;
+    box-shadow: 0 0 0 2px #f07e00;
+  }
+}
+
+.textarea {
+  min-height: 120px;
+  resize: none;
+}
+
+.checkbox_wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  label {
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+  }
+
+  .checkbox {
+    width: 18px;
+    height: 18px;
+    accent-color: #f07e00; // Оранжевая галочка
+    cursor: pointer;
+  }
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center; // Изменяем на center, чтобы текст был посередине
+  position: relative; // Добавляем, чтобы позиционировать стрелку внутри
+
+  background-color: rgba(240, 126, 0, 0.3);
+  border: 1px solid #f07e00;
+  border-radius: 16px;
+  padding: 12px 24px; // Делаем симметричные паддинги
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-top: 10px;
+  min-height: 60px;
+  span {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+    z-index: 1;
+  }
+
+  .arrow_box {
+    position: absolute; // Вырываем стрелку из потока
+    right: 8px; // Прижимаем к правому краю с небольшим отступом
+    top: 50%;
+    transform: translateY(-50%); // Центрируем по вертикали
+
+    background-color: #f07e00;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s ease;
+  }
+
+  &:hover {
+    background-color: #f07e00;
+    span {
+      color: #fff;
+    }
+    .arrow_box {
+      background-color: #fff;
+      svg path {
+        stroke: #f07e00;
+      }
+    }
+  }
+}
+.input.error {
+  border: 1px solid #ff4d4d !important;
+  background: rgba(255, 77, 77, 0.05);
+}
+
+.checkbox_wrapper.error_check {
+  label {
+    color: #ff4d4d;
+    font-weight: 500;
+  }
+}
+
+.button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+}

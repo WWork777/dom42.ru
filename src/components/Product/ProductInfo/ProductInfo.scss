@@ -1,0 +1,259 @@
+@use "../../../app/const" as *;
+
+// Вспомогательные стили (сохранены без изменений)
+.specifications-item-name {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  img {
+    width: 24px;
+    height: auto;
+  }
+}
+
+.product-page__right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%; // Гарантия того, что блок не сжимается
+
+  .product-name {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    h1 {
+      // Плавное уменьшение заголовка с 48px до 24px
+      font-size: clamp(24px, 5vw, 48px);
+      font-weight: 600;
+      margin-bottom: 0;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+
+    .product-model {
+      color: rgba(0, 0, 0, 0.5);
+      font-size: 16px;
+      margin-bottom: 0;
+      font-weight: 500;
+    }
+  }
+
+  .price-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-start;
+
+    p {
+      // Плавное уменьшение цены с 44px до 28px
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 500;
+      color: black;
+      margin-bottom: 0;
+    }
+
+    .buy-container {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      width: 100%;
+
+      // Переход в вертикальный список на смартфонах
+      @media (max-width: 600px) {
+        flex-direction: column;
+      }
+
+      .cta-form {
+        flex: 1;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 56px;
+
+        // Стили для Link и Label внутри кнопки
+        a,
+        label {
+          flex: 1;
+          text-align: left;
+          font-size: 16px;
+          text-decoration: none;
+          color: inherit;
+        }
+
+        .orange-arrow {
+          flex-shrink: 0;
+        }
+      }
+    }
+  }
+
+  .specifications-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+
+    .specifications-container-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 16px 0 8px;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.5);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .specifications-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr; // По умолчанию 2 колонки
+      gap: 12px;
+
+      // Характеристики в 1 колонку на маленьких экранах (iPhone SE и т.д.)
+      @media (max-width: 450px) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      align-items: center;
+      font-size: clamp(14px, 2vw, 18px);
+      font-weight: 500;
+
+      .back-icon {
+        flex-shrink: 0;
+        background-color: $gray-light;
+        padding: 6px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      img {
+        width: 22px;
+        height: 22px;
+        object-fit: contain;
+      }
+    }
+
+    .specifications-description {
+      white-space: pre-line;
+      font-weight: 450;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #333;
+    }
+  }
+}
+
+/* --- Стили для модального окна (Адаптированные) --- */
+.modal-overlay {
+  position: fixed;
+  inset: 0; // top:0, left:0, bottom:0, right:0
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  padding: 15px; // Чтобы модалка не прилипала к краям на мобилках
+  animation: modalFadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: white;
+  padding: clamp(20px, 5vw, 40px);
+  border-radius: 24px;
+  max-width: 480px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+
+  h3 {
+    color: $orange;
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 24px;
+    strong {
+      color: black;
+    }
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 32px;
+  cursor: pointer;
+  color: #ccc;
+  line-height: 1;
+  transition: 0.2s;
+  &:hover {
+    color: $orange;
+  }
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 2px solid $gray-light;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+    color: black;
+    &:focus {
+      border-color: $orange;
+    }
+  }
+
+  .cta-form {
+    width: 100%;
+    margin-top: 10px;
+    justify-content: space-between;
+    padding: 8px 8px 8px 20px;
+  }
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Сохранение ваших оригинальных медиа-запросов (дополнительно) */
+@media (max-width: 684px) {
+  .product-page__right {
+    .product-name h1 {
+      font-size: 24px;
+    }
+    .price-container p {
+      font-size: 24px;
+    }
+  }
+}
