@@ -138,11 +138,11 @@ export default function Header({ onOpenModal }) {
             <div className="footer-contacts">
               <div className="contacts-container">
                 <div className="tel">
-                  <a href="tel:+7 (3842) 65-77-75">+7 (3842) 65-77-75</a>
+                  <a href="tel:+7 923 523 83 30">+7 923 523 83 30</a>
                 </div>
               </div>
 
-              <a href="mailto:750535@bk.ru">750535@bk.ru</a>
+              <a href="mailto:dom.region42@gmail.com">dom.region42@gmail.com</a>
             </div>
           </div>
         </Offcanvas.Body>

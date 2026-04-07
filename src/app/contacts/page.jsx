@@ -29,7 +29,7 @@ export default function ContactsPage() {
               <div className={styles.contacts_text_block}>
                 <p className={styles.contacts_label}>Телефон</p>
                 <a href="tel:+73842657775" className={styles.contacts_link}>
-                  +7 (3842) 65-77-75
+                  +7 923 523 83 30
                 </a>
               </div>
             </div>
@@ -40,8 +40,8 @@ export default function ContactsPage() {
               </div>
               <div className={styles.contacts_text_block}>
                 <p className={styles.contacts_label}>Email</p>
-                <a href="mailto:info@dom42.ru" className={styles.contacts_link}>
-                  info@dom42.ru
+                <a href="mailto:dom.region42@gmail.com" className={styles.contacts_link}>
+                  dom.region42@gmail.com
                 </a>
               </div>
             </div>

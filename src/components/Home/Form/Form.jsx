@@ -110,9 +110,9 @@ export default function Form() {
               className={errors.project ? "error" : ""}
             >
               <option value="">Выберите проект</option>
-              <option value="дом1">дом1</option>
-              <option value="дом2">дом2</option>
-              <option value="дом3">дом3</option>
+              <option value="Ноктюрн 110">Ноктюрн 110</option>
+              <option value="Ноктюрн 90">Ноктюрн 90</option>
+              <option value="Баллада 130">Баллада 130</option>
             </select>
             {errors.project && (
               <span className="error-text">{errors.project}</span>

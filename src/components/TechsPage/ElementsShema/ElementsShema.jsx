@@ -169,7 +169,7 @@ export default function ElementsShema() {
         </div>
 
         <Image
-          src="/Techs/4.png"
+          src="/Techs/5.png"
           alt="Схема армирования"
           width={800}
           height={600}

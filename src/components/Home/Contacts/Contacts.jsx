@@ -53,7 +53,7 @@ export default function Contacts() {
               <div>
                 <p className="contacts__label">Телефон</p>
                 <a href="tel:+73842657775" className="contacts__link">
-                  +7 (3842) 65-77-75
+                  +7 923 523 83 30
                 </a>
               </div>
             </div>
@@ -78,8 +78,8 @@ export default function Contacts() {
               </div>
               <div>
                 <p className="contacts__label">Email</p>
-                <a href="mailto:info@dom42.ru" className="contacts__link">
-                  info@dom42.ru
+                <a href="mailto:dom.region42@gmail.com" className="contacts__link">
+                  dom.region42@gmail.com
                 </a>
               </div>
             </div>

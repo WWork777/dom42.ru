@@ -40,12 +40,12 @@ export default function Footer() {
         <h5>Главный офис</h5>
         <p>г. Кемерово, ул. Тухачевского, 50/5 (этаж 4, офис 1а)</p>
         <h5>Телефон</h5>
-        <Link href="tel:+7 (3842) 65-77-75">
-          <p>+7 (3842) 65-77-75</p>
+        <Link href="tel:+7 923 523 83 30">
+          <p>+7 923 523 83 30</p>
         </Link>
         <h5>Почта</h5>
-        <Link href="mailto:750535@bk.ru">
-          <p>750535@bk.ru</p>
+        <Link href="mailto:dom.region42@gmail.com">
+          <p>dom.region42@gmail.com</p>
         </Link>
         <div className={styles.footer_social}>
           <Link href="">
