@@ -1,0 +1,22 @@
+{
+  "name": "Дом42 | Строительство домов префаб-монолит в Кузбассе",
+  "short_name": "Дом42",
+  "description": "Строительство энергоэффективных домов в Кемерово и Кузбассе по технологии префаб-монолит. 80 дней, 80 000 ₽/м², класс A+.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/favicon/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
