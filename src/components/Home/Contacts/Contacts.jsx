@@ -5,6 +5,10 @@ import "./Contacts.scss";
 export default function Contacts() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ name: "", phone: "" });
+  
+  // Добавляем состояния для статуса отправки
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState("");
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -12,7 +16,9 @@ export default function Contacts() {
       document.body.style.overflow = "hidden"; // Блокируем скролл фона
     } else {
       document.body.style.overflow = "unset";
+      // Сбрасываем форму и статусы при закрытии
       setFormData({ name: "", phone: "" });
+      setStatus("");
     }
   };
 
@@ -27,15 +33,47 @@ export default function Contacts() {
     return `+7 (${n.slice(1, 4)}) ${n.slice(4, 7)}-${n.slice(7, 9)}-${n.slice(9, 11)}`;
   };
 
-  const handleSubmit = (e) => {
+  // Обновленная асинхронная функция отправки
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Проверка на заполненность номера телефона
     if (formData.phone.replace(/\D/g, "").length < 11) {
-      alert("Пожалуйста, введите полный номер телефона");
+      setStatus("Пожалуйста, введите полный номер телефона");
       return;
     }
-    console.log("Заявка из контактов:", formData);
-    alert("Заявка успешно отправлена!");
-    toggleModal();
+
+    setIsSubmitting(true);
+    setStatus("");
+
+    try {
+      const response = await fetch("/api/modal-send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          // Передаем пометку, чтобы вы понимали, откуда пришла заявка
+          details: "Заявка из блока Контакты", 
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus("Заявка успешно отправлена!");
+        alert("Заявка успешно отправлена!");
+        setFormData({ name: "", phone: "" });
+        toggleModal(); // Закрываем модальное окно после успеха
+      } else {
+        setStatus("Ошибка при отправке. Попробуйте позже.");
+      }
+    } catch (error) {
+      console.error("Ошибка при отправке:", error);
+      setStatus("Ошибка сети. Проверьте подключение к интернету.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -53,7 +91,7 @@ export default function Contacts() {
               <div>
                 <p className="contacts__label">Телефон</p>
                 <a href="tel:+73842657775" className="contacts__link">
-                  +7 923 523 83 30
+                  +7 (3842) 65-77-75
                 </a>
               </div>
             </div>
@@ -78,15 +116,15 @@ export default function Contacts() {
               </div>
               <div>
                 <p className="contacts__label">Email</p>
-                <a href="mailto:dom.region42@gmail.com" className="contacts__link">
-                  dom.region42@gmail.com
+                <a href="mailto:info@dom42.ru" className="contacts__link">
+                  info@dom42.ru
                 </a>
               </div>
             </div>
           </div>
 
           <button className="cta-form" onClick={toggleModal}>
-            <label>Оставить заявку</label>
+            <label style={{ cursor: "pointer" }}>Оставить заявку</label>
             <div className="orange-arrow">
               <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
                 <path
@@ -144,21 +182,43 @@ export default function Contacts() {
                   })
                 }
               />
-              <button type="submit" className="cta-form">
-                <label>Отправить заявку</label>
-                <div className="orange-arrow">
-                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                    <path
-                      d="M8.25 5.5L13.75 11L8.25 16.5"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </div>
+              
+              <button 
+                type="submit" 
+                className="cta-form" 
+                disabled={isSubmitting}
+                style={{ opacity: isSubmitting ? 0.7 : 1 }}
+              >
+                <label style={{ cursor: isSubmitting ? "default" : "pointer" }}>
+                  {isSubmitting ? "Отправка..." : "Отправить заявку"}
+                </label>
+                {!isSubmitting && (
+                  <div className="orange-arrow">
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                      <path
+                        d="M8.25 5.5L13.75 11L8.25 16.5"
+                        stroke="white"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                )}
               </button>
             </form>
+            
+            {/* Вывод статуса ошибки/успеха */}
+            {status && (
+              <p style={{ 
+                marginTop: '15px', 
+                color: status.includes('Ошибка') || status.includes('Пожалуйста') ? 'red' : 'green', 
+                fontSize: '14px', 
+                textAlign: 'center' 
+              }}>
+                {status}
+              </p>
+            )}
           </div>
         </div>
       )}

@@ -10,6 +10,7 @@ export default function FeedbackForm() {
     agreement: false,
   });
 
+  const [status, setStatus] = useState("");
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -58,15 +59,37 @@ export default function FeedbackForm() {
     if (!validate()) return;
 
     setIsSubmitting(true);
+    setStatus(""); // Очищаем предыдущий статус
 
-    // Имитация отправки
-    console.log("Отправка данных:", formData);
+    try {
+      const response = await fetch("/api/feedback-send", { // укажите ваш эндпоинт, например /api/feedback-send
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          // Передаем сообщение как details, если ваш API использует это поле
+          details: formData.message, 
+        }),
+      });
 
-    setTimeout(() => {
-      alert("Сообщение отправлено!");
-      setFormData({ name: "", phone: "", message: "", agreement: false });
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus("Сообщение успешно отправлено!");
+        alert("Заявка на расчет доставки отправлена!");
+        setFormData({ name: "", phone: "", message: "", agreement: false });
+        // Очищаем статус через 5 секунд (по желанию)
+        setTimeout(() => setStatus(""), 5000); 
+      } else {
+        setStatus("Ошибка при отправке. Попробуйте позже.");
+      }
+    } catch (error) {
+      console.error("Submit error:", error);
+      setStatus("Ошибка сети. Проверьте подключение к интернету.");
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (

@@ -1,10 +1,16 @@
 "use client";
 import { useState } from "react";
 import styles from "./JoinTeam.module.scss";
+// import Link from "next/link"; // Если Link больше нигде не используется, его можно убрать
 import Image from "next/image";
+
 export default function JoinTeam() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ name: "", phone: "" });
+
+  // Добавляем состояния для отправки
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState("");
 
   const benefits = [
     "Бесплатное обучение (30–90 дней стажировки)",
@@ -19,7 +25,9 @@ export default function JoinTeam() {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
+      // Очищаем форму и статус при закрытии окна
       setFormData({ name: "", phone: "" });
+      setStatus("");
     }
   };
 
@@ -37,15 +45,43 @@ export default function JoinTeam() {
     return `+7 (${phoneNumber.slice(1, 4)}) ${phoneNumber.slice(4, 7)}-${phoneNumber.slice(7, 9)}-${phoneNumber.slice(9, 11)}`;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.phone.replace(/\D/g, "").length < 11) {
-      alert("Пожалуйста, введите полный номер телефона");
+      setStatus("Пожалуйста, введите полный номер телефона");
       return;
     }
-    console.log("Заявка в команду:", formData);
-    alert("Спасибо! Мы свяжемся с вами в ближайшее время.");
-    toggleModal();
+
+    setIsSubmitting(true);
+    setStatus("");
+
+    try {
+      const response = await fetch("/api/modal-send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          details: "Заявка в команду (Ветераны СВО)", // Метка, чтобы понимать откуда лид
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus("Заявка успешно отправлена!");
+        alert("Спасибо! Мы свяжемся с вами в ближайшее время.");
+        setFormData({ name: "", phone: "" });
+        toggleModal(); // Закрываем модалку после успешной отправки
+      } else {
+        setStatus("Ошибка при отправке. Попробуйте позже.");
+      }
+    } catch (error) {
+      console.error("Submit error:", error);
+      setStatus("Ошибка сети. Проверьте подключение к интернету.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -106,6 +142,7 @@ export default function JoinTeam() {
         </div>
       </div>
 
+      {/* МОДАЛЬНОЕ ОКНО */}
       {isModalOpen && (
         <div className={styles.modal_overlay} onClick={toggleModal}>
           <div
@@ -141,21 +178,42 @@ export default function JoinTeam() {
                   })
                 }
               />
-              <Link href="/projects" className={styles.cta_button}>
-                <span>Оставить заявку</span>
-                <div className={styles.arrow_box}>
-                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                    <path
-                      d="M8.25 5.5L13.75 11L8.25 16.5"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </div>
-              </Link>
+              
+              {/* Заменено с <Link> на <button type="submit"> */}
+              <button 
+                type="submit" 
+                className="cta-form"
+                disabled={isSubmitting}
+                style={{ opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? "default" : "pointer" }}
+              >
+                <span>{isSubmitting ? "Отправка..." : "Оставить заявку"}</span>
+                {!isSubmitting && (
+                  <div className={styles.arrow_box}>
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                      <path
+                        d="M8.25 5.5L13.75 11L8.25 16.5"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </button>
             </form>
+
+            {/* Вывод статуса ошибки/успеха */}
+            {status && (
+              <p style={{ 
+                marginTop: '15px', 
+                color: status.includes('Ошибка') || status.includes('Пожалуйста') ? 'red' : 'green', 
+                fontSize: '14px', 
+                textAlign: 'center' 
+              }}>
+                {status}
+              </p>
+            )}
           </div>
         </div>
       )}

@@ -7,10 +7,20 @@ export default function ElementsShema() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ name: "", phone: "" });
 
+  // Добавляем состояния для отправки
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState("");
+
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
-    // При закрытии можно очищать форму
-    if (isModalOpen) setFormData({ name: "", phone: "" });
+    if (!isModalOpen) {
+      document.body.style.overflow = "hidden"; // Блокируем скролл
+    } else {
+      document.body.style.overflow = "unset";
+      // Очищаем форму и статусы при закрытии
+      setFormData({ name: "", phone: "" });
+      setStatus("");
+    }
   };
 
   // Функция маски
@@ -34,20 +44,47 @@ export default function ElementsShema() {
     setFormData({ ...formData, phone: formattedValue });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Валидация на длину номера (в маске должно быть 11 цифр)
     if (formData.phone.replace(/\D/g, "").length < 11) {
-      alert("Пожалуйста, введите полный номер телефона");
+      setStatus("Пожалуйста, введите полный номер телефона");
       return;
     }
 
-    console.log("Данные для расчета:", formData);
-    alert("Заявка отправлена! Мы свяжемся с вами.");
-    setIsModalOpen(false);
-    setFormData({ name: "", phone: "" });
+    setIsSubmitting(true);
+    setStatus("");
+
+    try {
+      const response = await fetch("/api/modal-send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          details: "Заявка на расчёт", // Метка источника
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus("Заявка успешно отправлена!");
+        alert("Заявка отправлена! Мы свяжемся с вами.");
+        setFormData({ name: "", phone: "" });
+        toggleModal(); // Закрываем модалку после успеха
+      } else {
+        setStatus("Ошибка при отправке. Попробуйте позже.");
+      }
+    } catch (error) {
+      console.error("Ошибка при отправке:", error);
+      setStatus("Ошибка сети. Проверьте подключение к интернету.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
   return (
     <section className={styles.elements_shema}>
       <h2>Схема элементов конструкции</h2>
@@ -146,7 +183,7 @@ export default function ElementsShema() {
           </div>
           <div className={styles.button}>
             <button type="submit" className="cta-form" onClick={toggleModal}>
-              <label>Получить расчёт</label>
+              <label style={{ cursor: "pointer" }}>Получить расчёт</label>
               <div className="orange-arrow">
                 <svg
                   width="22"
@@ -169,7 +206,7 @@ export default function ElementsShema() {
         </div>
 
         <Image
-          src="/Techs/5.png"
+          src="/Techs/4.png"
           alt="Схема армирования"
           width={800}
           height={600}
@@ -207,21 +244,42 @@ export default function ElementsShema() {
                 value={formData.phone}
                 onChange={handlePhoneChange}
               />
-              <button type="submit" className="cta-form">
-                <label>Отправить данные</label>
-                <div className="orange-arrow">
-                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                    <path
-                      d="M8.25 5.5L13.75 11L8.25 16.5"
-                      stroke="white"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </div>
+              <button 
+                type="submit" 
+                className="cta-form"
+                disabled={isSubmitting}
+                style={{ opacity: isSubmitting ? 0.7 : 1 }}
+              >
+                <label style={{ cursor: isSubmitting ? "default" : "pointer" }}>
+                  {isSubmitting ? "Отправка..." : "Отправить данные"}
+                </label>
+                {!isSubmitting && (
+                  <div className="orange-arrow">
+                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                      <path
+                        d="M8.25 5.5L13.75 11L8.25 16.5"
+                        stroke="white"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                )}
               </button>
             </form>
+
+            {/* Вывод статуса ошибки/успеха */}
+            {status && (
+              <p style={{ 
+                marginTop: '15px', 
+                color: status.includes('Ошибка') || status.includes('Пожалуйста') ? 'red' : 'green', 
+                fontSize: '14px', 
+                textAlign: 'center' 
+              }}>
+                {status}
+              </p>
+            )}
           </div>
         </div>
       )}

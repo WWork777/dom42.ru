@@ -15,6 +15,10 @@ export default function CardProject({
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ name: "", phone: "" });
+  
+  // Добавляем состояния для статуса отправки
+  const [status, setStatus] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -22,7 +26,9 @@ export default function CardProject({
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
+      // Сбрасываем форму и статусы при закрытии
       setFormData({ name: "", phone: "" });
+      setStatus("");
     }
   };
 
@@ -37,15 +43,45 @@ export default function CardProject({
     return `+7 (${n.slice(1, 4)}) ${n.slice(4, 7)}-${n.slice(7, 9)}-${n.slice(9, 11)}`;
   };
 
-  const handleSubmit = (e) => {
+  // Обновленная логика отправки формы
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Проверка на заполненность номера телефона
     if (formData.phone.replace(/\D/g, "").length < 11) {
-      alert("Пожалуйста, введите полный номер телефона");
+      setStatus("Пожалуйста, введите полный номер телефона");
       return;
     }
-    console.log("Запрос доставки для проекта:", name, formData);
-    alert("Заявка на расчет доставки отправлена!");
-    toggleModal();
+
+    setIsSubmitting(true);
+    setStatus("");
+
+    try {
+      const response = await fetch("/api/modal-send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          // Добавляем название проекта, чтобы понимать, откуда пришла заявка
+          projectName: name, 
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus("Заявка успешно отправлена!");
+        alert("Заявка на расчет доставки отправлена!");
+        setFormData({ name: "", phone: "" });
+        toggleModal(); // Закрываем модалку при успешной отправке
+      } else {
+        setStatus("Ошибка при отправке. Попробуйте еще раз.");
+      }
+    } catch (error) {
+      setStatus("Ошибка при отправке. Проверьте соединение с интернетом.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -152,21 +188,35 @@ export default function CardProject({
                   })
                 }
               />
-              <button type="submit" className={styles.submit_button}>
-                <span>Отправить заявку</span>
-                <div className={styles.arrow_box_small}>
-                  <svg width="18" height="18" viewBox="0 0 22 22" fill="none">
-                    <path
-                      d="M8.25 5.5L13.75 11L8.25 16.5"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </div>
+              
+              <button 
+                type="submit" 
+                className={styles.submit_button}
+                disabled={isSubmitting}
+              >
+                <span>{isSubmitting ? "Отправка..." : "Отправить заявку"}</span>
+                {!isSubmitting && (
+                  <div className={styles.arrow_box_small}>
+                    <svg width="18" height="18" viewBox="0 0 22 22" fill="none">
+                      <path
+                        d="M8.25 5.5L13.75 11L8.25 16.5"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                )}
               </button>
             </form>
+            
+            {/* Вывод статуса ошибки/успеха */}
+            {status && (
+              <p style={{ marginTop: '10px', color: status.includes('Ошибка') || status.includes('Пожалуйста') ? 'red' : 'green', fontSize: '14px', textAlign: 'center' }}>
+                {status}
+              </p>
+            )}
           </div>
         </div>
       )}

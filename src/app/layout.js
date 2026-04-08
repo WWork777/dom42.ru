@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./globals.scss";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/footer";
+import YandexMetrika from "@/components/YandexMetrika/YandexMEtrika";
 
 
 
@@ -62,10 +63,14 @@ const grandisExtended = localFont({
 export default function RootLayout({ children }) {
   return (
     <html lang="ru" className={`${montserrat.variable} ${grandisExtended.className}`}>
+      <head>
+        <meta name="yandex-verification" content="71cb7fed874b0b24" />
+      </head>
       <body>
         <Header />
         {children}
         <Footer />
+        <YandexMetrika />
       </body>
     </html>
   );

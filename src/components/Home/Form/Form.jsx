@@ -11,6 +11,7 @@ export default function Form() {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState(""); // Добавлено состояние для статуса отправки
 
   // Функция форматирования номера
   const formatPhoneNumber = (value) => {
@@ -69,7 +70,7 @@ export default function Form() {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
 
@@ -79,14 +80,36 @@ export default function Form() {
     }
 
     setIsSubmitting(true);
-    console.log("Отправка данных:", formData);
+    setStatus(""); // Очищаем предыдущий статус
 
-    setTimeout(() => {
-      alert("Заявка успешно отправлена!");
-      setFormData({ project: "", address: "", phone: "" });
+    try {
+      const response = await fetch("/api/rashet-send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          phone: formData.phone,
+          project: formData.project, // Передаем выбранный проект
+          address: formData.address, // Передаем адрес в детали
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus("Заявка на расчет успешно отправлена!");
+        setFormData({ project: "", address: "", phone: "" });
+        setErrors({});
+        // Очищаем сообщение об успехе через 5 секунд (по желанию)
+        setTimeout(() => setStatus(""), 5000);
+      } else {
+        setStatus("Ошибка при отправке. Попробуйте позже.");
+      }
+    } catch (error) {
+      console.error("Submit error:", error);
+      setStatus("Ошибка сети. Проверьте подключение к интернету.");
+    } finally {
       setIsSubmitting(false);
-      setErrors({});
-    }, 1500);
+    }
   };
 
   return (
@@ -150,21 +173,39 @@ export default function Form() {
             type="submit"
             className={`cta-form ${isSubmitting ? "loading" : ""}`}
             disabled={isSubmitting}
+            style={{ opacity: isSubmitting ? 0.7 : 1 }}
           >
-            <label>{isSubmitting ? "Отправка..." : "Получить расчёт"}</label>
-            <div className="orange-arrow">
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <path
-                  d="M8.25 5.5L13.75 11L8.25 16.5"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
+            <label style={{ cursor: isSubmitting ? "default" : "pointer" }}>
+              {isSubmitting ? "Отправка..." : "Получить расчёт"}
+            </label>
+            {!isSubmitting && (
+              <div className="orange-arrow">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                  <path
+                    d="M8.25 5.5L13.75 11L8.25 16.5"
+                    stroke="white"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+            )}
           </button>
         </form>
+
+        {/* Вывод статуса ошибки или успеха под формой */}
+        {status && (
+          <p style={{ 
+            marginTop: '20px', 
+            color: status.includes('Ошибка') ? '#ff4d4f' : '#52c41a', 
+            fontSize: '16px', 
+            textAlign: 'center',
+            fontWeight: 'bold'
+          }}>
+            {status}
+          </p>
+        )}
       </div>
     </section>
   );
