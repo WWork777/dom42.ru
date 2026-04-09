@@ -48,7 +48,7 @@ export default function Footer() {
           <p>dom.region42@gmail.com</p>
         </Link>
         <div className={styles.footer_social}>
-          <Link href="">
+          <Link href="https://t.me/OblasovAleksandr">
             <img src="/Icons/tg.svg" className={styles.footer_svg} />
           </Link>
           <Link href="https://max.ru/u/f9LHodD0cOJRtuggQMOzpRNL_nNU-UmfUsIFVsCkyA29ihOmzySYtogrmNo">
@@ -60,9 +60,9 @@ export default function Footer() {
           <Link href="https://rutube.ru/channel/27042220/">
             <img src="/Icons/рутуб.svg" className={styles.footer_svg} />
           </Link>
-          <Link href="">
+          {/* <Link href="">
             <img src="/Icons/дзен.svg" className={styles.footer_svg} />
-          </Link>
+          </Link> */}
         </div>
         <div className={styles.footer_bottom}>
           <h5>© Дом42. Все права защищены.</h5>

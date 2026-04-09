@@ -157,21 +157,21 @@ export default function ContactsPage() {
 
             <p className={styles.social_label}>Мы в соцсетях</p>
             <div className={styles.social}>
-              <Link href="#">
+              <Link href="https://t.me/OblasovAleksandr">
                 <img src="/Icons/tg.svg" alt="tg" />
               </Link>
-              <Link href="#">
+              <Link href="https://max.ru/u/f9LHodD0cOJRtuggQMOzpRNL_nNU-UmfUsIFVsCkyA29ihOmzySYtogrmNo">
                 <img src="/Icons/max.svg" alt="max" />
               </Link>
-              <Link href="#">
+              <Link href="https://vk.com/arhitek142">
                 <img src="/Icons/vk.svg" alt="vk" />
               </Link>
-              <Link href="#">
+              <Link href="https://rutube.ru/channel/27042220/">
                 <img src="/Icons/рутуб.svg" alt="rutube" />
               </Link>
-              <Link href="#">
+              {/* <Link href="#">
                 <img src="/Icons/дзен.svg" alt="dzen" />
-              </Link>
+              </Link> */}
             </div>
           </div>
 

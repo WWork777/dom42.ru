@@ -8,6 +8,7 @@ export default function About() {
     <section className="about">
       <div className="video-container">
         <iframe
+          loading="lazy"
           width="720"
           height="405"
           src="https://rutube.ru/play/embed/167ccb0b9d39728643ac8831a9acd16b/?skinColor=F07E00"
