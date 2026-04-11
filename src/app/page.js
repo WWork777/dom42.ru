@@ -8,13 +8,13 @@ import Risks from "@/components/Home/Risks/Risks";
 import Set from "@/components/Home/Set/Set";
 import Stroybat from "@/components/Home/Stroybat/Stroybat";
 
-const baseUrl = 'http://dom-142.ru'
+const baseUrl = "http://dom-142.ru";
 
 /** @type {import('next').Metadata} */
 export const metadata = {
-  title: 'Дом42 | Строительство домов по технологии префаб-монолит в Кемерово',
+  title: "Дом42 | Строительство домов по технологии префаб-монолит в Кемерово",
   description:
-    'Строительство энергоэффективных домов в Кузбассе по технологии префаб-монолит. 80 000 ₽/м², срок 80 дней, класс A+. Финальная цена без скрытых платежей. Гарантия 100+ лет.',
+    "Строительство энергоэффективных домов в Кузбассе по технологии префаб-монолит. 80 000 ₽/м², срок 80 дней, класс A+. Финальная цена без скрытых платежей. Гарантия 100+ лет.",
 
   // Каноническая ссылка
   alternates: {
@@ -22,43 +22,43 @@ export const metadata = {
   },
 
   keywords: [
-    'строительство домов Кемерово',
-    'префаб монолит',
-    'дома заводской готовности',
-    'энергоэффективные дома Кузбасс',
-    'строительство ИЖС',
-    'каркасно-монолитные дома',
-    'дома под ключ Кемерово',
-    'быстровозводимые дома',
-    'технология префаб',
-    'монолитное домостроение',
-    'готовые дома Кузбасс',
-    'энергосберегающие дома',
+    "строительство домов Кемерово",
+    "префаб монолит",
+    "дома заводской готовности",
+    "энергоэффективные дома Кузбасс",
+    "строительство ИЖС",
+    "каркасно-монолитные дома",
+    "дома под ключ Кемерово",
+    "быстровозводимые дома",
+    "технология префаб",
+    "монолитное домостроение",
+    "готовые дома Кузбасс",
+    "энергосберегающие дома",
   ],
 
   openGraph: {
-    title: 'Дом42 | Строительство домов префаб-монолит в Кузбассе',
+    title: "Дом42 | Строительство домов префаб-монолит в Кузбассе",
     description:
-      'Новый стандарт ИЖС в Кузбассе. Дома за 80 дней по 80 000 ₽/м². Класс энергоэффективности A+. Финальная цена без скрытых платежей.',
-    type: 'website',
+      "Новый стандарт ИЖС в Кузбассе. Дома за 80 дней по 80 000 ₽/м². Класс энергоэффективности A+. Финальная цена без скрытых платежей.",
+    type: "website",
     url: baseUrl,
-    siteName: 'Дом42',
+    siteName: "Дом42",
     images: [
       {
         url: `${baseUrl}/images/Hero/hero.jpg`, // Создайте изображение 1200x630px с домами
         width: 1200,
         height: 630,
-        alt: 'Дом42 - Строительство энергоэффективных домов по технологии префаб-монолит',
+        alt: "Дом42 - Строительство энергоэффективных домов по технологии префаб-монолит",
       },
     ],
-    locale: 'ru_RU',
+    locale: "ru_RU",
   },
 
   twitter: {
-    card: 'summary_large_image',
-    title: 'Дом42 | Строительство домов префаб-монолит',
+    card: "summary_large_image",
+    title: "Дом42 | Строительство домов префаб-монолит",
     description:
-      'Дома за 80 дней по 80 000 ₽/м². Класс A+. Финальная цена без скрытых платежей',
+      "Дома за 80 дней по 80 000 ₽/м². Класс A+. Финальная цена без скрытых платежей",
     images: [`${baseUrl}/images/Hero/hero.jpg`],
   },
 
@@ -70,9 +70,9 @@ export const metadata = {
       index: true,
       follow: true,
       noimageindex: false,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
 
@@ -83,9 +83,9 @@ export const metadata = {
   },
 
   // Дополнительные метатеги
-  authors: [{ name: 'Дом42 - Строительство домов' }],
-  creator: 'Дом42',
-  publisher: 'Дом42',
+  authors: [{ name: "Дом42 - Строительство домов" }],
+  creator: "Дом42",
+  publisher: "Дом42",
 
   // Форматирование для мобильных
   formatDetection: {
@@ -97,23 +97,23 @@ export const metadata = {
   },
 
   // Viewport настройки
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
+  viewport: "width=device-width, initial-scale=1, maximum-scale=5",
 
   // Apple specific
   appleWebApp: {
-    title: 'Дом42',
-    statusBarStyle: 'black-translucent',
+    title: "Дом42",
+    statusBarStyle: "black-translucent",
   },
 
   // Manifest
-  manifest: '/manifest.json',
+  manifest: "/manifest.json",
 
   // Structured Data для строительной компании
   other: {
-    'og:price:amount': '80000',
-    'og:price:currency': 'RUB',
-    'business:region': 'Кемеровская область',
-    'business:city': 'Кемерово',
+    "og:price:amount": "80000",
+    "og:price:currency": "RUB",
+    "business:region": "Кемеровская область",
+    "business:city": "Кемерово",
   },
 };
 
@@ -122,11 +122,12 @@ export default function Home() {
     <>
       <Hero />
       <Numbers />
-      <About />
-      <Risks />
       <Preview />
+      <Risks />
       <Set />
       <Form />
+      <About />
+
       <Stroybat />
       <Contacts />
     </>

@@ -1,40 +1,108 @@
-@use '../../../app/const' as *;
+@use "../../../app/const" as *;
 
-.risks{
-    flex-direction: row-reverse;
-        img{
-            object-fit: cover;
-            width: 50%;
-            height: auto;
-            border-radius: 32px;
-            -webkit-border-radius: 32px;
-            -moz-border-radius: 32px;
-            -ms-border-radius: 32px;
-            -o-border-radius: 32px;
+.risks {
+  flex-direction: row-reverse;
+  img {
+    object-fit: cover;
+    width: 50%;
+    height: auto;
+    border-radius: 32px;
+    -webkit-border-radius: 32px;
+    -moz-border-radius: 32px;
+    -ms-border-radius: 32px;
+    -o-border-radius: 32px;
+  }
+  .about-text-title {
+    p {
+      span {
+        font-weight: 500;
+        color: $orange;
+      }
     }
-    .about-text-title{
-        p{
-            span{
-                font-weight: 500;
-                color: $orange;
-            }
-        }
-    }
+  }
 }
 
-@media(max-width:1600px){
-    .risks{
-        img{
-            width: 80%;
-        }
+@media (max-width: 1600px) {
+  .risks {
+    img {
+      width: 80%;
     }
+  }
 }
 
-@media(max-width:992px){
-    .risks{
-        flex-direction: column;
-        img{
-            width: 100%;
-        }
+@media (max-width: 992px) {
+  .risks {
+    flex-direction: column;
+    img {
+      width: 100%;
     }
+  }
+}
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+
+  .modal-content {
+    background: #fff;
+    padding: 40px;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 450px;
+    position: relative;
+    text-align: center;
+
+    h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    p {
+      margin-bottom: 20px;
+      color: #666;
+    }
+
+    input {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      background-color: #f9f9f9;
+      color: #333;
+      outline: none;
+      &:focus {
+        border-color: $orange;
+      }
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      background: $orange;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.3s;
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 24px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+  }
 }
