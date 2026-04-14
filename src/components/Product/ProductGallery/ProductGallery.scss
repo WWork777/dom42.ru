@@ -1,4 +1,4 @@
-@use '../../../app/const' as *;
+@use "../../../app/const" as *;
 
 .product-gallery {
   display: flex;
@@ -48,7 +48,7 @@
     -moz-border-radius: 20px;
     -ms-border-radius: 20px;
     -o-border-radius: 20px;
-}
+  }
 
   .swiper-slide-thumb-active img {
     border: 2px solid black;
@@ -63,8 +63,8 @@
   img {
     width: 100%;
     height: auto;
-    aspect-ratio: 6 / 5;
-    object-fit: cover;
+    // aspect-ratio: 6 /5;
+    object-fit: contain;
     //обрезаетлишнее,нобезискаженийheight: auto;
     //можнооставить,нонеобязательноdisplay: block;
     cursor: zoom-in;
@@ -74,7 +74,7 @@
     -moz-border-radius: 32px;
     -ms-border-radius: 32px;
     -o-border-radius: 32px;
-}
+  }
 }
 
 /* ===== стрелки ===== */
@@ -136,9 +136,10 @@
 
       img {
         display: block;
-        width: 100%;height: auto;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
       }
 
       &.active {
@@ -232,100 +233,100 @@
   }
 
   .lg-custom-thumbnails {
-  .lg-thumb {
-    position: fixed;
-    top: auto;
-    left: 0; // слева
-    bottom: 0;
-    width: 100%; // ширина колонки с миниатюрами
-    max-height: fit-content;
-    height: fit-content;
-    background: #fff;
-    padding: 8px 8px 72px 8px !important;
-    overflow-x: auto;
-    display: flex !important;
-    flex-direction: row !important;
-    gap: 8px;
+    .lg-thumb {
+      position: fixed;
+      top: auto;
+      left: 0; // слева
+      bottom: 0;
+      width: 100%; // ширина колонки с миниатюрами
+      max-height: fit-content;
+      height: fit-content;
+      background: #fff;
+      padding: 8px 8px 72px 8px !important;
+      overflow-x: auto;
+      display: flex !important;
+      flex-direction: row !important;
+      gap: 8px;
 
-    .lg-thumb-item {
-      border: 2px solid transparent;
-      border-radius: 8px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: all 0.2s;
-      margin: 0 !important;
-      height: fit-content !important;
-      -webkit-border-radius: 8px;
-      -moz-border-radius: 8px;
-      -ms-border-radius: 8px;
-      -o-border-radius: 8px;
+      .lg-thumb-item {
+        border: 2px solid transparent;
+        border-radius: 8px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin: 0 !important;
+        height: fit-content !important;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        -ms-border-radius: 8px;
+        -o-border-radius: 8px;
 
-      img {
-        display: block;
-        width: 100%;
-        height: auto;
+        img {
+          display: block;
+          width: 100%;
+          height: auto;
+        }
+
+        &.active {
+          border-color: black;
+        }
+
+        &:hover {
+          border-color: black;
+        }
       }
+    }
 
-      &.active {
-        border-color: black;
-      }
+    .lg-outer {
+      margin-left: 0px; // отступ для основной картинки
+      width: calc(100%) !important;
+      height: 80% !important;
+      margin-top: 32px !important;
+      margin-bottom: 128px !important;
+      margin-right: 32px !important;
+    }
+
+    .lg-counter {
+      padding: 16px !important;
+      line-height: 1;
+    }
+
+    .lg-icon {
+      padding: 0 !important;
+      border: 2px solid transparent !important;
+      border-radius: 500px !important;
+      -webkit-border-radius: 500px !important;
+      -moz-border-radius: 500px !important;
+      -ms-border-radius: 500px !important;
+      -o-border-radius: 500px !important;
+      transition: 0.2s ease;
+      -webkit-transition: 0.2s ease;
+      -moz-transition: 0.2s ease;
+      -ms-transition: 0.2s ease;
+      -o-transition: 0.2s ease;
 
       &:hover {
-        border-color: black;
+        border: 2px solid black !important;
+        color: black !important;
       }
     }
-  }
 
-  .lg-outer {
-    margin-left: 0px; // отступ для основной картинки
-    width: calc(100%) !important;
-    height: 80% !important;
-    margin-top: 32px !important;
-    margin-bottom: 128px !important;
-    margin-right: 32px !important;
-  }
+    .lg-zoom-in {
+      margin-right: 16px !important;
+    }
 
-  .lg-counter {
-    padding: 16px !important;
-    line-height: 1;
-  }
+    .lg-prev,
+    .lg-next {
+      padding: 16px !important;
+      background-color: transparent !important;
+    }
 
-  .lg-icon {
-    padding: 0 !important;
-    border: 2px solid transparent !important;
-    border-radius: 500px !important;
-    -webkit-border-radius: 500px !important;
-    -moz-border-radius: 500px !important;
-    -ms-border-radius: 500px !important;
-    -o-border-radius: 500px !important;
-    transition: 0.2s ease;
-    -webkit-transition: 0.2s ease;
-    -moz-transition: 0.2s ease;
-    -ms-transition: 0.2s ease;
-    -o-transition: 0.2s ease;
+    .lg-prev {
+      left: 0 !important;
+    }
 
-    &:hover {
-      border: 2px solid black !important;
-      color: black !important;
+    .lg-next {
+      right: 0 !important;
     }
   }
-
-  .lg-zoom-in {
-    margin-right: 16px !important;
-  }
-
-  .lg-prev,
-  .lg-next {
-    padding: 16px !important;
-    background-color: transparent !important;
-  }
-
-  .lg-prev {
-    left: 0 !important;
-  }
-
-  .lg-next {
-    right: 0 !important;
-  }
-}
 }
